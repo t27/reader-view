@@ -12,7 +12,6 @@ var cheerio = require('cheerio');
 
 var readTemplate =  dot.template(fs.readFileSync(__dirname + '/views/page.html',"utf-8"));
 
-
 app.use(express.static('public'));
 
 // http://expressjs.com/en/starter/basic-routing.html
@@ -106,13 +105,6 @@ var imageProxy = function(req,res) {
 }
 
 app.get("/im", imageProxy);
-
-// Simple in-memory store for now
-var dreams = [
-  "Find and count some sheep",
-  "Climb a really tall mountain",
-  "Wash the dishes"
-  ];
 
 // listen for requests :)
 var listener = app.listen(process.env.PORT, function () {
