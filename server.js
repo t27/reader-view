@@ -58,22 +58,20 @@ var proxifyImages = function(articleHtml) {
     if(srcset) {
       var srcsetArr = srcset.split(',');
       for(var j=0;j<srcsetArr.length;j++) {
-        var elementArr = srcsetArr[j].split(' ');
-        var url = elementArr[0];
-        var width = elementArr[1];
+        var elementArr = (srcsetArr[j].trim()).split(' ');
+        var url = elementArr[0].trim();
+        var width = elementArr[1].trim();
         var newUrl = getProxyImageUrl(url);
         srcsetArr[j] = newUrl + " " + width;
       }
       cheerioedElem.attr('srcset',srcsetArr.join(', '));
     }
   }
-  console.log("Images===", img_elems.length);
-  console.log("srcset1=",$(img_elems[0]).attr('srcset'));
   return $.html();
 }
 
 var getProxyImageUrl = function(imageUrl) {
-  return '/im/?url=' + encodeURIComponent(imageUrl.trim());
+  return '/im/?url=' + (encodeURIComponent(imageUrl.trim())).trim();
 }
 
 

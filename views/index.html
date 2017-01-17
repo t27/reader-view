@@ -21,14 +21,22 @@
   <body>
     <header>
       <h1>
-        A Dream of the Future
+        Simple Reader View
       </h1>
     </header>
 
     <main>
-      <a href="/read/?url=http://waitbutwhy.com/2015/12/the-tail-end.html">Reader View</a>
+      
+      <form action="/read" method="get">
+        <input type="text" name="url" id="url" placeholder="Enter Url here" />
+        <input type="submit" id="submiturl" value="Read Now" />
+      </form>
+      <br>
+      <a href="/read/?url=http://waitbutwhy.com/2015/12/the-tail-end.html">Test Link</a>
     </main>
-
+    <footer>
+      <a href="http://github.com/t27">Tarang</a>
+    </footer>
     <!-- Your web-app is https, so your scripts need to be too -->
     <script src="https://code.jquery.com/jquery-2.2.1.min.js"
             integrity="sha256-gvQgAFzTH6trSrAWoH1iPo9Xc96QxSZ3feW6kem+O00="
