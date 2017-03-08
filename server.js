@@ -14,7 +14,6 @@ var readTemplate =  dot.template(fs.readFileSync(__dirname + '/views/page.html',
 
 app.use(express.static('public'));
 
-// http://expressjs.com/en/starter/basic-routing.html
 app.get("/", function (request, response) {
   response.sendFile(__dirname + '/views/index.html');
 });
@@ -42,11 +41,36 @@ app.get("/read", function(req, res) {
   });
 });
 
+app.get("/length", function(req, res) {
+  var url = req.query.url;
+  var wpm = req.query.wpm || 250;
+  console.log(url);
+  read(url, function(err, article, meta) {
+    // callback(article);
+    if (err) {
+      console.log("Error:-",err);
+    }
+    var ret = {};
+
+    let $ = cheerio.load(article.content);
+    let text = $.text();
+    let wordcount = text.trim().split(/\s+/).length;
+    let mins = wordcount/wpm;
+    ret.mins = mins;
+    res.json(ret);
+
+    // Close article to clean up jsdom and prevent leaks
+    article.close();
+  });
+});
+
+// Browsers wont load external images from non-https pages, 
+// so convert image links to point to a local route (/im/) which acts as a image proxy
 var proxifyImages = function(articleHtml) {
   let $ = cheerio.load(articleHtml);
   var img_elems = $('img');
   
-
+  var cheerioedElem;
   for(var i=0; i < img_elems.length;i++){
     cheerioedElem = $(img_elems[i]);
     // proxify src
@@ -90,11 +114,11 @@ var imageProxy = function(req,res) {
   
   request(options, function (err, response, body) {
       if(!err && response.statusCode == 200){
-          var magigNumberInBody = body.toString('hex',0,4);
-          if (magigNumberInBody == magic.jpg || 
-              magigNumberInBody == magic.png ||
-              magigNumberInBody == magic.gif) {
-  
+          var magicNumberInBody = body.toString('hex',0,4);
+          if (magicNumberInBody == magic.jpg || 
+              magicNumberInBody == magic.png ||
+              magicNumberInBody == magic.gif) {
+              // Ensures this proxy is only used for jpg, png and gifs
               res.send(body);
   
           }

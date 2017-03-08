@@ -2,9 +2,9 @@
 	"//1": "describes your app and its dependencies",
 	"//2": "https://docs.npmjs.com/files/package.json",
 	"//3": "updating this file will download and update your packages",
-	"name": "my-hyperdev-app",
+	"name": "reader-view-test",
 	"version": "0.0.1",
-	"description": "What am I about?",
+	"description": "A readability article extractor for web pages",
 	"main": "server.js",
 	"scripts": {
 		"start": "node server.js"
@@ -12,9 +12,9 @@
 	"dependencies": {
 		"express": "^5.0.0-alpha.2",
 		"node-readability": "^2.2.0",
-		"dot": "*",
-		"request": "*",
-		"cheerio": "*"
+		"dot": "^1.1.1",
+		"request": "^2.80.0",
+		"cheerio": "^0.22.0"
 	},
 	"engines": {
 		"node": "4.4.5"
